@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Config from '../js/Config';
 // import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../css/custom_css.css';
-import {Stack} from "react-bootstrap";
+import {Stack, Form, Dropdown} from "react-bootstrap";
 import React, {Component} from "react";
 import DragPan from 'ol/interaction/DragPan';
 import {DragBox} from "ol/interaction";
@@ -13,18 +13,20 @@ import ShowToast from "./common/Toast";
 import LineString from "ol/geom/LineString";
 import SLD2OL from "./common/SLD2OL";
 import reproject from "reproject";
+import {connect} from "react-redux";
 
 
 class MapToolBar extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props.map);
         this.state = {olmap: props.map, lm: props.layerManager, btnClicked: 'default', isToastSHow: false}
         this.handleClick = this.handleClick.bind(this);
     }
 
     async handleClick(btnClick) {
         const mtb = this;
-        const map = this.state.olmap;
+        const map = this.props.map;
         await this.setState({
             btnClicked: btnClick
         }, function () {
@@ -111,7 +113,7 @@ class MapToolBar extends Component {
     }
 
     setCurserDisplay(curserStyle) {
-        document.getElementById("map").style.cursor = curserStyle;
+        // document.getElementById("map").style.cursor = curserStyle;
     }
 
 
@@ -159,34 +161,57 @@ class MapToolBar extends Component {
         }
     };
 
+    componentDidMount() {
+        this.setState({olmap: this.props.map});
+    }
+
+    componentDidUpdate() {
+        if (!this.props.map) {
+            this.setState({olmap: this.props.map});
+        }
+
+    }
+
     render() {
         return (
-            <div>
+            <div className="d-flex justify-content-end">
                 <ShowToast isToastSHow={this.state.isToastSHow} title="asd" content="dfg"/>
-                <Stack direction="vertical" gap={2}
+                <Stack direction="horizontal" gap={2}
                        style={{margin: "10px", zIndex: 2, position: "absolute", backgroundColor: "#eee4bb"}}
                        aria-label="Toolbar">
-                    <Button variant="outline-light" onClick={() => this.handleClick("full-extent")}><img
-                        src={require('../img/icons/ZoomFullExtent.png')}
-                        data-toggle="tooltip" title="Zoom to Full Extent" alt="Extent"></img> </Button>{' '}
-                    <Button variant="outline-light" onClick={() => this.handleClick("zoom-in")}><img
-                        src={require('../img/icons/icon_zoomin.gif')}
-                        data-toggle="tooltip" title="Zoom In"></img> </Button>{' '}
-                    <Button variant="outline-light" onClick={() => this.handleClick("zoom-out")}><img
-                        src={require('../img/icons/icon_zoomout.gif')}
-                        data-toggle="tooltip" title="Zoom Out"></img> </Button>{' '}
-                    <Button variant="outline-light" onClick={() => this.handleClick("zoom-rectangle")}><img
-                        src={require('../img/icons/icon_zoomrect.gif')}
-                        data-toggle="tooltip" title="Zoom by Rectangle"></img> </Button>{' '}
-                    <Button variant="outline-light" onClick={() => this.handleClick("pan")}><img
-                        src={require('../img/icons/icon_pan.gif')}
-                        data-toggle="tooltip" title="Zoom In"></img> </Button>{' '}
-                    <Button variant="outline-light" onClick={() => this.handleClick("identify")}><img
-                        src={require('../img/icons/icon_information.png')}
-                        data-toggle="tooltip" title="Identify"></img> </Button>{' '}
-                    <Button variant="outline-light" onClick={() => this.handleClick("clear")}><img
-                        src={require('../img/icons/yes.png')}
-                        data-toggle="tooltip" title="Clear All"></img> </Button>{' '}
+                    {/*<Button variant="outline-light" onClick={() => this.handleClick("full-extent")}><img*/}
+                    {/*    src={require('../img/icons/ZoomFullExtent.png')}*/}
+                    {/*    data-toggle="tooltip" title="Zoom to Full Extent" alt="Extent"></img> </Button>{' '}*/}
+                    {/*<Button variant="outline-light" onClick={() => this.handleClick("zoom-in")}><img*/}
+                    {/*    src={require('../img/icons/icon_zoomin.gif')}*/}
+                    {/*    data-toggle="tooltip" title="Zoom In"></img> </Button>{' '}*/}
+                    {/*<Button variant="outline-light" onClick={() => this.handleClick("zoom-out")}><img*/}
+                    {/*    src={require('../img/icons/icon_zoomout.gif')}*/}
+                    {/*    data-toggle="tooltip" title="Zoom Out"></img> </Button>{' '}*/}
+                    {/*<Button variant="outline-light" onClick={() => this.handleClick("zoom-rectangle")}><img*/}
+                    {/*    src={require('../img/icons/icon_zoomrect.gif')}*/}
+                    {/*    data-toggle="tooltip" title="Zoom by Rectangle"></img> </Button>{' '}*/}
+                    {/*<Button variant="outline-light" onClick={() => this.handleClick("pan")}><img*/}
+                    {/*    src={require('../img/icons/icon_pan.gif')}*/}
+                    {/*    data-toggle="tooltip" title="Zoom In"></img> </Button>{' '}*/}
+                    {/*<Button variant="outline-light" onClick={() => this.handleClick("identify")}><img*/}
+                    {/*    src={require('../img/icons/icon_information.png')}*/}
+                    {/*    data-toggle="tooltip" title="Identify"></img> </Button>{' '}*/}
+                    {/*<Button variant="outline-light" onClick={() => this.handleClick("clear")}><img*/}
+                    {/*    src={require('../img/icons/yes.png')}*/}
+                    {/*    data-toggle="tooltip" title="Clear All"></img> </Button>{' '}*/}
+                    {/*<Form.Control className="me-auto" placeholder="Add your item here..."/>*/}
+                    {/*<div className="vr"/>*/}
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            Choose Layer To View on Map
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Stack>
             </div>
         );
@@ -196,4 +221,9 @@ class MapToolBar extends Component {
 
 }
 
-export default MapToolBar;
+const mapStateToProps = (state) => {
+    return {
+        map: state.map.map,
+    };
+};
+export default connect(mapStateToProps)(MapToolBar);

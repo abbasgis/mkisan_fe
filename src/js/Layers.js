@@ -101,8 +101,6 @@ class LayersManager {
                 let mvt_layer = me.getVectorLayer(layer)
                 me.overlayLayers.push(mvt_layer)
             }
-
-
         })
     }
 
@@ -272,6 +270,10 @@ class LayersManager {
             });
         }
         return selStyle;
+    }
+
+    getSelectionLayer() {
+        return this.specialLayers["selectedFeatureLayer"]
     }
 }
 

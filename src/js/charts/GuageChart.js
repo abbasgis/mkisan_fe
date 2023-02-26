@@ -25,10 +25,11 @@ export {GuageChart}
 const multiChartsConfig = (value, open, click, placement, str1, str2) => {
     return {
         chart: {
-            type: "gauge"
+            type: "gauge",
+
         },
         title: {
-            text: "",
+            text: "زمیں میں پانی کا تناسب",
             style: {
                 color: "blue",
                 alignText: "right"
@@ -38,23 +39,23 @@ const multiChartsConfig = (value, open, click, placement, str1, str2) => {
             enabled: false
         },
         pane: {
-            center: ["50%", "95%"],
-            size: "120%",
+            center: ["50%", "100%"],
+            size: "100%",
             innerSize: 0,
             startAngle: -90,
             endAngle: 90,
-            background: {
-                backgroundColor: "",
-                innerRadius: "59%",
-                outerRadius: "120%",
-                borderColor: "red",
-                borderWidth: 1,
-                shape: "arc"
-            }
+            // background: {
+            //     backgroundColor: "white",
+            //     innerRadius: "89%",
+            //     outerRadius: "120%",
+            //     borderColor: "red",
+            //     borderWidth: 1,
+            //     shape: "arc"
+            // }
         },
 
         exporting: {
-            enabled: false
+            enabled: true
         },
 
         tooltip: {
@@ -71,30 +72,30 @@ const multiChartsConfig = (value, open, click, placement, str1, str2) => {
         },
         yAxis: {
             min: 0,
-            max: 170,
-            title: {
-                text: "RPM",
-                margin: 20,
-                style: {
-                    color: "blue",
-                    fontSize: "20px"
-                }
-            },
+            max: 100,
+            // title: {
+            //     text: "RPM",
+            //     margin: 20,
+            //     style: {
+            //         color: "blue",
+            //         fontSize: "20px"
+            //     }
+            // },
             plotBands: [{
-                from: 25,
-                to: 120,
-                color: '#55BF3B', // green
-                // thickness: 20
-            }, {
-                from: 120,
-                to: 160,
-                color: '#DDDF0D', // yellow
+                from: 0,
+                to: 40,
+                color: '#57ea32', // green
                 thickness: 40
             }, {
-                from: 160,
-                to: 200,
-                color: '#DF5353', // red
-                thickness: 50
+                from: 40,
+                to: 80,
+                color: '#eff10a', // yellow
+                thickness: 40
+            }, {
+                from: 80,
+                to: 100,
+                color: '#fa0707', // red
+                thickness: 40
             }]
         },
 
@@ -103,22 +104,21 @@ const multiChartsConfig = (value, open, click, placement, str1, str2) => {
                 dial: {
                     backgroundColor: "#000000",
                     baseLength: "10",
-                    baseWidth: "14",
+                    baseWidth: "10",
                     borderColor: "#000",
                     borderWidth: 0,
-
-                    radius: 100,
+                    radius: 90,
                     rearLength: 1,
                     topWidth: 1
                 },
-                innerRadius: "59%",
-                radius: 120,
-                lineWidth: 113,
+                // innerRadius: "59%",
+                // radius: 10,
+                // lineWidth: 113,
                 data: [
                     {
                         y: 52,
-                        unit: "km/h",
-                        name: "sample"
+                        // unit: "km/h",
+                        // name: "sample",
                         // innerRadius: 69,
                         // outerRadius: 80
                     }
@@ -126,15 +126,15 @@ const multiChartsConfig = (value, open, click, placement, str1, str2) => {
                 dataLabels: {
                     format:
                         '<div style="text-align:center">' +
-                        '<span style="font-size:25px">${y:.1f}</span><br/>' +
+                        '<span style="font-size:25px; color:red">{y:.0f}</span><br/>' +
                         '<span style="font-size:12px;opacity:0.4; color:red">' +
                         `{point.name}` +
                         "</span>" +
                         "</div>"
                 },
-                tooltip: {
-                    valueSuffix: " revolutions/min"
-                }
+                // tooltip: {
+                //     valueSuffix: " revolutions/min"
+                // }
             }
         ]
     };
