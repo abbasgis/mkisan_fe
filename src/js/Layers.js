@@ -11,7 +11,7 @@ import CircleStyle from "ol/style/Circle"
 import Fill from "ol/style/Fill";
 import Text from 'ol/style/Text';
 import Config from "./Config";
-import SLD2OL from "./common/SLD2OL";
+// import SLD2OL from "./common/SLD2OL";
 import Legend from "ol-ext/legend/Legend";
 import {XYZ} from "ol/source";
 import URLS_API from "./common/URLS_API";
@@ -218,17 +218,17 @@ class LayersManager {
         });
         return img;
     }
-    updateLayersStyle = function (arrLayers) {
-        let k = new SLD2OL()
-        const me = this;
-        arrLayers.forEach(function (layer) {
-            if (layer.get('legend')['sType'] === 'sld') {
-                k.convertSLD2OL(layer)
-            } else if (layer.get('legend')['sType'] === 'ol') {
-                layer.legend = {sType: 'ol', graphic: null}
-            }
-        });
-    }
+    // updateLayersStyle = function (arrLayers) {
+    //     let k = new SLD2OL()
+    //     const me = this;
+    //     arrLayers.forEach(function (layer) {
+    //         if (layer.get('legend')['sType'] === 'sld') {
+    //             k.convertSLD2OL(layer)
+    //         } else if (layer.get('legend')['sType'] === 'ol') {
+    //             layer.legend = {sType: 'ol', graphic: null}
+    //         }
+    //     });
+    // }
 
     getVectorLayerStyle(feature, layer) {
         if (layer.legend['sType'] === 'ol') {
