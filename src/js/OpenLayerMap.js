@@ -62,7 +62,7 @@ function OpenLayerMap() {
             <Row>
                 <Col xs lg="6">
                     <MapToolBar layerManager={lm}/>
-                    <div ref={mapRef} style={{height: "88vh", padding: "5px"}}></div>
+                    <div ref={mapRef} style={{height: "88vh", padding: "2px"}}></div>
                 </Col>
                 <Col xs lg="3" style={{backgroundColor: "transparent"}}>
                     <Row>
@@ -87,9 +87,9 @@ function OpenLayerMap() {
                     </Row>
                 </Col>
                 <Col xs lg="3" className="d-flex flex-column">
-                    <div style={{flex: "6", marginBottom: "10px", marginTop: "10px", backgroundColor: "white"}}>
+                    <div style={{flex: "7",  backgroundColor: "white"}}>
                         <Row>
-                            <marquee direction="up" scrollamount="3" style={{margin: "10px", height: "100%"}}>
+                            <marquee direction="up" scrollamount="3" style={{ height: "100%"}}>
                                 <h2>Latest News</h2>
                                 <ul>
                                     <li>News item 1</li>
@@ -106,7 +106,7 @@ function OpenLayerMap() {
                             </marquee>
                         </Row>
                     </div>
-                    <div style={{flex: "4"}}>
+                    <div style={{flex: "3"}}>
                         <YouTubeVideo/>
                     </div>
                     {/*<div style={{height: "88vh", overflowY: 'scroll'}}>*/}
