@@ -17,11 +17,16 @@ import GuageHighChart from "./charts/GuageHighChart";
 import CustomCalendar from "./CustomCalendar";
 import YouTubeVideo from "./YouTubeVideo";
 import {useDispatch} from "react-redux";
+import CustomAccordions from "./components/CustomAccordions";
 
 
 function OpenLayerMap() {
     const lm = new LayersManager();
     const [map, setMap] = useState(null);
+    const [gaugeValue, setGaugeValue] = useState(10);
+    const setGaugeVal = (v) => {
+        setGaugeValue(v);
+    };
     const dispatch = useDispatch();
     let state = {center: getCenter(Config.extent_3857), zoom: 6.5, isToastSHow: false};
     const mapRef = useRef(null);
@@ -34,7 +39,7 @@ function OpenLayerMap() {
                 new LayerGroup({
                     name: 'Overlay Layers',
                     title: 'Overlay Layers',
-                    layers: lm.getOverlayLayers()
+                    layers: lm.overlayLayers
                 })
             ],
             view: new OlView({
@@ -46,7 +51,8 @@ function OpenLayerMap() {
             controls: defaultControls(),
         });
         // add controls to map
-        new OLControls(olmap, lm)
+        new OLControls(olmap, lm, setGaugeVal)
+
         // olmap.setTarget("map");
         setMap(olmap);
         dispatch({type: 'SET_MAP', payload: olmap});
@@ -62,7 +68,7 @@ function OpenLayerMap() {
                     <Row>
                         <Col xs lg="12" style={{backgroundColor: "transparent"}}>
                             <div style={{height: "88vh", overflowY: 'scroll'}}>
-                                <GuageHighChart title={"زمیں میں پانی کا تناسب"} gauge_val={"60"}/>
+                                <GuageHighChart title={"زمیں میں پانی کا تناسب"} gauge_val={gaugeValue}/>
                                 <div style={{borderBottom: '1px solid gray', paddingBottom: '10px'}}></div>
                                 <GuageHighChart title={"زمیں میں پانی کا تناسب"} gauge_val={"60"}/>
                                 <div style={{borderBottom: '1px solid gray', paddingBottom: '10px'}}></div>
@@ -80,10 +86,32 @@ function OpenLayerMap() {
                         </Col>
                     </Row>
                 </Col>
-                <Col xs lg="3">
-                    <div style={{position: "absolute", bottom: "30px"}}>
+                <Col xs lg="3" className="d-flex flex-column">
+                    <div style={{flex: "6", marginBottom: "10px", marginTop: "10px", backgroundColor: "white"}}>
+                        <Row>
+                            <marquee direction="up" scrollamount="3" style={{margin: "10px", height: "100%"}}>
+                                <h2>Latest News</h2>
+                                <ul>
+                                    <li>News item 1</li>
+                                    <li>News item 2</li>
+                                    <li>News item 3</li>
+                                    <li>News item 4</li>
+                                    <li>News item 5</li>
+                                    <li>News item 6</li>
+                                    <li>News item 7</li>
+                                    <li>News item 8</li>
+                                    <li>News item 9</li>
+                                    <li>News item 10</li>
+                                </ul>
+                            </marquee>
+                        </Row>
+                    </div>
+                    <div style={{flex: "4"}}>
                         <YouTubeVideo/>
                     </div>
+                    {/*<div style={{height: "88vh", overflowY: 'scroll'}}>*/}
+                    {/*    <CustomAccordions/>*/}
+                    {/*</div>*/}
                 </Col>
             </Row>
         </Container>

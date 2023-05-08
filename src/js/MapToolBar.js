@@ -172,47 +172,18 @@ class MapToolBar extends Component {
 
     }
 
+    handleItemClick = (event) => {
+        let me = this;
+        me.props.layerManager.addMyLayerToMap(event, me.props.map)
+        // alert(`Clicked item with href ${event.target.href}`);
+        // Add your custom logic here
+    };
+
     render() {
         return (
             <div className="d-flex justify-content-end">
                 <ShowToast isToastSHow={this.state.isToastSHow} title="asd" content="dfg"/>
-                <Stack direction="horizontal" gap={2}
-                       style={{margin: "10px", zIndex: 2, position: "absolute", backgroundColor: "#eee4bb"}}
-                       aria-label="Toolbar">
-                    {/*<Button variant="outline-light" onClick={() => this.handleClick("full-extent")}><img*/}
-                    {/*    src={require('../img/icons/ZoomFullExtent.png')}*/}
-                    {/*    data-toggle="tooltip" title="Zoom to Full Extent" alt="Extent"></img> </Button>{' '}*/}
-                    {/*<Button variant="outline-light" onClick={() => this.handleClick("zoom-in")}><img*/}
-                    {/*    src={require('../img/icons/icon_zoomin.gif')}*/}
-                    {/*    data-toggle="tooltip" title="Zoom In"></img> </Button>{' '}*/}
-                    {/*<Button variant="outline-light" onClick={() => this.handleClick("zoom-out")}><img*/}
-                    {/*    src={require('../img/icons/icon_zoomout.gif')}*/}
-                    {/*    data-toggle="tooltip" title="Zoom Out"></img> </Button>{' '}*/}
-                    {/*<Button variant="outline-light" onClick={() => this.handleClick("zoom-rectangle")}><img*/}
-                    {/*    src={require('../img/icons/icon_zoomrect.gif')}*/}
-                    {/*    data-toggle="tooltip" title="Zoom by Rectangle"></img> </Button>{' '}*/}
-                    {/*<Button variant="outline-light" onClick={() => this.handleClick("pan")}><img*/}
-                    {/*    src={require('../img/icons/icon_pan.gif')}*/}
-                    {/*    data-toggle="tooltip" title="Zoom In"></img> </Button>{' '}*/}
-                    {/*<Button variant="outline-light" onClick={() => this.handleClick("identify")}><img*/}
-                    {/*    src={require('../img/icons/icon_information.png')}*/}
-                    {/*    data-toggle="tooltip" title="Identify"></img> </Button>{' '}*/}
-                    {/*<Button variant="outline-light" onClick={() => this.handleClick("clear")}><img*/}
-                    {/*    src={require('../img/icons/yes.png')}*/}
-                    {/*    data-toggle="tooltip" title="Clear All"></img> </Button>{' '}*/}
-                    {/*<Form.Control className="me-auto" placeholder="Add your item here..."/>*/}
-                    {/*<div className="vr"/>*/}
-                    <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Choose Layer To View on Map
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Stack>
+
             </div>
         );
 

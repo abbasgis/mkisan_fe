@@ -12,7 +12,7 @@ function YouTubeVideo() {
         },
     };
     return (
-        <div>
+        <div style={{marginBottom: "2px"}}>
             < YouTube videoId={videoId} opts={opts}/>
         </div>
     );

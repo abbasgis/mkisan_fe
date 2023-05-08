@@ -15,6 +15,7 @@ import SLD2OL from "./common/SLD2OL";
 import Legend from "ol-ext/legend/Legend";
 import {XYZ} from "ol/source";
 import URLS_API from "./common/URLS_API";
+import {Group} from "ol/layer";
 
 class LayersManager {
     overlayLayers = []
@@ -24,6 +25,51 @@ class LayersManager {
         {
             'title': ' زمیں میں پانی کا تناسب',
             'name': '6104d834-b0e8-11ed-bfa3-010101010000',
+            'displayInSwitcher': true,
+            'lType': 'raster',
+            'url': "http://localhost:3338/layers/mvt_layer/2/{z}/{x}/{y}",
+            'isVisible': true,
+            'legend': {sType: 'ol', graphic: null}, // stype is Style Type can be "ol" or "sld"
+        },
+        {
+            'title': 'CROP CONSUMPTION',
+            'name': '6104d834-b0e8-11ed-bfa3-010101010001',
+            'displayInSwitcher': true,
+            'lType': 'raster',
+            'url': "http://localhost:3338/layers/mvt_layer/2/{z}/{x}/{y}",
+            'isVisible': true,
+            'legend': {sType: 'ol', graphic: null}, // stype is Style Type can be "ol" or "sld"
+        },
+        {
+            'title': 'CROP Min DEMAND',
+            'name': '6104d834-b0e8-11ed-bfa3-010101010003',
+            'displayInSwitcher': true,
+            'lType': 'raster',
+            'url': "http://localhost:3338/layers/mvt_layer/2/{z}/{x}/{y}",
+            'isVisible': true,
+            'legend': {sType: 'ol', graphic: null}, // stype is Style Type can be "ol" or "sld"
+        },
+        {
+            'title': 'RAINFALL',
+            'name': '6104d834-b0e8-11ed-bfa3-010101010006',
+            'displayInSwitcher': true,
+            'lType': 'raster',
+            'url': "http://localhost:3338/layers/mvt_layer/2/{z}/{x}/{y}",
+            'isVisible': true,
+            'legend': {sType: 'ol', graphic: null}, // stype is Style Type can be "ol" or "sld"
+        },
+        {
+            'title': 'SOIL MOISTURE',
+            'name': '6104d834-b0e8-11ed-bfa3-010101010007',
+            'displayInSwitcher': true,
+            'lType': 'raster',
+            'url': "http://localhost:3338/layers/mvt_layer/2/{z}/{x}/{y}",
+            'isVisible': true,
+            'legend': {sType: 'ol', graphic: null}, // stype is Style Type can be "ol" or "sld"
+        },
+        {
+            'title': 'TEMPERATURE',
+            'name': '6104d834-b0e8-11ed-bfa3-010101010008',
             'displayInSwitcher': true,
             'lType': 'raster',
             'url': "http://localhost:3338/layers/mvt_layer/2/{z}/{x}/{y}",
@@ -102,6 +148,27 @@ class LayersManager {
                 me.overlayLayers.push(mvt_layer)
             }
         })
+    }
+
+    addMyLayerToMap(layer, map) {
+        let me = this;
+        let layer_settings = {
+            'title': ' زمیں میں پانی کا تناسب',
+            'name': '6104d834-b0e8-11ed-bfa3-010101010000',
+            'displayInSwitcher': true,
+            'lType': 'raster',
+            'url': "http://localhost:3338/layers/mvt_layer/2/{z}/{x}/{y}",
+            'isVisible': true,
+            'legend': {sType: 'ol', graphic: null}, // stype is Style Type can be "ol" or "sld"
+        };
+        layer.url = Config.raster_url
+        let checkLayer = me.getLayerByName(layer_settings.name)
+        if (checkLayer) {
+            me.setLayersVisibility(layer_settings.name, map)
+        } else {
+            // let mvt_layer = me.getRasterLayer(layer_settings)
+            // me.overlayLayers.push(mvt_layer)
+        }
     }
 
     getRasterLayer = function (layer) {
@@ -195,8 +262,21 @@ class LayersManager {
         return this.baseLayers;
     }
 
-    getOverlayLayers() {
-        return this.overlayLayers;
+    getOverlayLayers(map) {
+        if (map) {
+            const layers = map.getLayers().getArray();
+            for (let i = 0; i < layers.length; i++) {
+                let layer = layers[i]
+                if (layer.get('name') !== 'Base Layers') {
+                    {
+                        this.overlayLayers = layer.getLayers().getArray()
+                        break;
+                    }
+
+                }
+            }
+        }
+        return this.overlayLayers
     }
 
     addSelectedFeatureLayer() {
@@ -274,6 +354,32 @@ class LayersManager {
 
     getSelectionLayer() {
         return this.specialLayers["selectedFeatureLayer"]
+    }
+
+    getLayerByName(name) {
+        let me = this;
+        let layer = null
+        me.overlayLayers.map(function (lyr) {
+            if (lyr.get('name') === name) {
+                layer = lyr;
+                return lyr
+            }
+        })
+        return layer;
+    }
+
+    setLayersVisibility(name, map) {
+        let me = this;
+        const layers = me.getOverlayLayers(map);
+        for (let i = 0; i < layers.length; i++) {
+            let layer = layers[i]
+            if (layer.get('name') === name || layer.get('name') === 'selected features') {
+                layer.setVisible(true)
+            } else {
+                layer.setVisible(false)
+            }
+        }
+        return null;
     }
 }
 
