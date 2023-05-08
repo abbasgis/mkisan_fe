@@ -5,7 +5,8 @@ const Config = {
     baseProjection: 'EPSG:3857',
     wgs84Projection: 'EPSG:4326',
     animationDuration: 350,
-    api_url: 'http://127.0.0.1:8000',
+    // api_url: 'http://127.0.0.1:8000',
+    api_url: 'http://65.1.240.23:8000',
     raster_url: "api/map/raster_tile/{uuid}",
     vector_url: ""
 

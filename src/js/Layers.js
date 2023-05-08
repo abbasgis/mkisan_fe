@@ -21,6 +21,7 @@ class LayersManager {
     overlayLayers = []
     baseLayers = []
     specialLayers = []
+    // host = location.hostname
     layers = [
         {
             'title': ' زمیں میں پانی کا تناسب',
